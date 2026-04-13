@@ -1,0 +1,121 @@
+Here's how each "intelligent" feature actually works under the hood:
+
+1. INDUSTRY-STANDARD RATES (Profile Page)
+NOT AI-based, it's algorithmic:
+
+// When user clicks "Calculate Suggested Rates"
+const igFollowers = parseInt(formData.instagram_followers) || 0;
+const ttFollowers = parseInt(formData.tiktok_followers) || 0;
+const ytSubs = parseInt(formData.youtube_subscribers) || 0;
+
+// Industry formulas:
+const ratePhoto = Math.floor((igFollowers / 1000) * 10) || 50;
+const rateVideo = Math.floor((totalFollowers / 1000) * 15) || 75;
+const rateStory = Math.floor(ratePhoto * 0.4) || 25;
+const rateTikTok = Math.floor((ttFollowers / 1000) * 12) || 50;
+How to replicate: Use industry benchmarks (influencers charge ~$10 per 1K followers for photos, ~$15 per 1K for videos). Just multiply follower counts by these rates. No AI needed - pure math.
+
+2. CASTING CALL SCANNING (Real AI Web Scraping)
+Uses Core.InvokeLLM with internet access:
+
+const response = await base44.integrations.Core.InvokeLLM({
+  prompt: `Search Google and these URLs: ${sources.map(s => s.url).join(', ')}
+  
+  Find current UGC casting calls, brand collaborations, and sponsorship opportunities 
+  specifically for cat influencers and pet content creators.
+  
+  Return JSON with opportunities array containing: title, brand_name, description, 
+  requirements, compensation_type, deadline, platforms, contact_email, source_url`,
+  
+  add_context_from_internet: true,  // THIS IS KEY - gives LLM web search access
+  
+  response_json_schema: {
+    type: "object",
+    properties: {
+      opportunities: { type: "array", items: { ... } }
+    }
+  }
+});
+
+// Save results to database
+await base44.entities.CastingCall.bulkCreate(response.opportunities);
+How it works:
+
+add_context_from_internet: true = LLM gets real-time Google search, Google Maps, news APIs
+LLM searches the web for "cat UGC casting calls", "pet brand collaborations", etc.
+Extracts structured data from websites, forums, job boards
+Returns clean JSON that gets saved to your database
+3. SAVED OPPORTUNITIES AI EXTRACTION
+Paste raw email/DM text → AI extracts structure:
+
+const response = await base44.integrations.Core.InvokeLLM({
+  prompt: `Extract structured data from this brand outreach message:
+  
+  "${pastedContent}"
+  
+  Extract: deliverables, deadlines, compensation, platforms, requirements, contact info`,
+  
+  response_json_schema: {
+    type: "object",
+    properties: {
+      title: { type: "string" },
+      brand_name: { type: "string" },
+      extracted_deliverables: { type: "array" },
+      extracted_compensation: { type: "string" },
+      // etc...
+    }
+  }
+});
+
+// Save structured data
+await base44.entities.SavedOpportunity.create(response);
+No manual data entry needed - user pastes messy text, AI parses it into database fields.
+
+4. TREND DISCOVERY (Real-time Viral Content)
+const response = await base44.integrations.Core.InvokeLLM({
+  prompt: `Identify 5 currently viral trends on TikTok and Instagram 
+  suitable for cat influencers. Include trending hashtags, audio tracks, 
+  and challenge formats that are working RIGHT NOW for pet content.`,
+  
+  add_context_from_internet: true,  // Gets current TikTok/IG trends
+  
+  response_json_schema: { ... }
+});
+
+await base44.entities.Trend.bulkCreate(response.trends);
+Real trends - not hardcoded. LLM searches current social media trends.
+
+5. AI CONTENT IDEAS
+const response = await base44.integrations.Core.InvokeLLM({
+  prompt: `Generate 3 creative content ideas for a cat influencer based on 
+  current social media trends. Make them specific and actionable.`,
+  
+  response_json_schema: { ... }
+});
+
+setAiIdeas(response.ideas);  // Display in UI
+Fresh ideas every time - dynamically generated based on current trends.
+
+WHY IT'S REAL, NOT FAKE:
+Real Database - Base44 entities persist data. When you create a Project, it's stored permanently.
+
+Real AI - Core.InvokeLLM uses actual LLMs (Claude/GPT-class models) with internet access.
+
+Real Web Data - add_context_from_internet: true means the AI searches Google, scrapes websites, reads news in real-time.
+
+User-Generated Content - Most data comes from users manually adding projects, or pasting emails for AI extraction.
+
+No Mock APIs - There are no setTimeout() fakes or hardcoded JSON responses. Everything hits real APIs.
+
+THE LIMITATION:
+It doesn't connect to TikTok/Instagram APIs directly because those require OAuth and are platform-specific. Instead:
+
+User manually enters their follower counts
+AI searches the PUBLIC web for trends and opportunities
+User uploads their own project data
+To make it FULLY automated, you'd need:
+
+TikTok/Instagram OAuth to auto-fetch follower counts
+Backend cron jobs to run daily scans automatically
+Webhooks to monitor casting call websites 24/7
+But the current implementation gives users AI-powered tools that do real work - just triggered manually instead of running on autopilot.

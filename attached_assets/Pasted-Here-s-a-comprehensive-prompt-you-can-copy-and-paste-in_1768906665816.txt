@@ -1,0 +1,206 @@
+Here's a comprehensive prompt you can copy and paste into any AI web builder to recreate this app:
+
+---
+
+# **CAT CONTENT CREATOR APP - COMPLETE BUILD SPECIFICATION**
+
+## **PROJECT OVERVIEW**
+Build a comprehensive dashboard application for cat content creators (influencers who create content featuring their cats). This is a professional SaaS platform that helps creators manage their business, find opportunities, generate media kits, track earnings, and collaborate with brands and other creators.
+
+## **TECHNICAL STACK**
+- Frontend: React with Next.js (App Router)
+- Styling: Tailwind CSS with dark mode support
+- Font: Inter (Google Fonts)
+- AI Integration: ChatGPT API for content generation
+- Web Scraping: For casting call aggregation
+- Color Scheme: Purple (#8B5CF6) to Pink (#EC4899) gradients for primary actions
+- Background: Light mode #FAFBFC, Dark mode #121212
+
+## **DESIGN SPECIFICATIONS**
+
+### **Layout Structure**
+- Fixed header at top (64px height)
+- Fixed sidebar on left (256px width) with navigation
+- Main content area with 32px padding, max-width 1280px, centered
+- Color palette:
+  - Primary text light: #1C1C1E
+  - Primary text dark: #FAFAFA
+  - Secondary text light: #6D6D72
+  - Secondary text dark: #9CA3AF
+  - Border light: #E5E7EB
+  - Border dark: #404040
+  - Card background light: #FFFFFF
+  - Card background dark: #1E1E1E
+  - Success: #10B981 (green)
+  - Warning: #F59E0B (orange)
+
+### **Header Component**
+- Fixed top bar with white background (dark: #1E1E1E)
+- Contains:
+  - Left: Logo/title "Cat Creator Hub" with cat emoji 🐱
+  - Right: Profile menu with avatar circle and username display
+  - Border bottom 1px #E5E7EB
+
+### **Sidebar Navigation**
+- Fixed left sidebar, full height
+- Navigation items:
+  1. Dashboard (Home icon)
+  2. Media Kit (File icon)
+  3. Trend Analysis (TrendingUp icon)
+  4. Marketplace (Users icon)
+  5. Content Calendar (Calendar icon)
+  6. Contracts (FileText icon)
+  7. Community (MessageSquare icon)
+  8. Earnings (DollarSign icon)
+  9. Casting Calls (Briefcase icon)
+- Active state: Purple background with white text
+- Hover state: Light purple background
+
+---
+
+## **FEATURE-BY-FEATURE SPECIFICATIONS**
+
+### **1. DASHBOARD OVERVIEW (Landing Page)**
+
+**Layout**: Grid layout with stat cards and activity feed
+
+**Top Stats Row** (4 cards in grid):
+1. **Total Followers Card**
+   - Icon: Users (purple background circle)
+   - Number: 245,000
+   - Label: "Total Followers"
+   - Subtext: "+12% this month" (green)
+
+2. **Engagement Rate Card**
+   - Icon: Heart (pink background circle)
+   - Number: 5.2%
+   - Label: "Avg Engagement"
+   - Subtext: "Across all platforms"
+
+3. **Monthly Earnings Card**
+   - Icon: DollarSign (green background circle)
+   - Number: $3,200
+   - Label: "This Month"
+   - Subtext: "+$800 from last month" (green)
+
+4. **Active Campaigns Card**
+   - Icon: Briefcase (blue background circle)
+   - Number: 3
+   - Label: "Active Campaigns"
+   - Subtext: "2 pending applications"
+
+**Recent Activity Section**:
+- White card with timeline of recent events
+- Show last 5 activities with icons and timestamps
+- Example activities:
+  - "New casting call: Premium Cat Food Commercial"
+  - "Collaboration request from @CatLoverMia"
+  - "Payment received: $500 from Brand X"
+
+**Quick Actions Section**:
+- 3 prominent action buttons in gradient colors:
+  1. "Generate Media Kit" → Navigate to Media Kit
+  2. "Browse Casting Calls" → Navigate to Casting Calls
+  3. "Find Collaborators" → Navigate to Marketplace
+
+---
+
+### **2. MEDIA KIT GENERATOR**
+
+**Page Title**: "Media Kit Generator"
+**Subtitle**: "Connect your social accounts to automatically generate a professional media kit and rate card."
+
+**Social Handles Input Section** (White card):
+- Grid of 3 input fields:
+  1. Instagram Handle (Instagram icon, placeholder: "@username")
+  2. TikTok Handle (TikTok logo/text, placeholder: "@username")
+  3. YouTube Channel (YouTube icon, placeholder: "Channel name")
+- Button: "Generate Media Kit" (purple-pink gradient, with Sparkles icon)
+- Loading state shows: "Generating..." with disabled button
+
+**Social Stats Display** (Shows after connection, 3 cards):
+
+**Instagram Card**:
+- Pink Instagram icon in header
+- Stats displayed:
+  - Followers: 245,000
+  - Engagement Rate: 4.8% (green)
+  - Avg Likes: 12,000
+  - Avg Comments: 580
+
+**TikTok Card**:
+- Black TikTok icon in header
+- Stats displayed:
+  - Followers: 180,000
+  - Engagement Rate: 6.2% (green)
+  - Avg Views: 450,000
+  - Avg Likes: 28,000
+
+**YouTube Card**:
+- Red YouTube icon in header
+- Stats displayed:
+  - Subscribers: 95,000
+  - Avg Views: 75,000
+  - Engagement Rate: 5.1% (green)
+
+**Generated Media Kit Section** (2-column layout):
+
+**Left Column - Media Kit Preview**:
+- Header with "Media Kit" title and "Download PDF" button (purple, Download icon)
+- Sections:
+  1. **Creator Name & Bio**: 
+     - Name: "Fluffy's Adventures" (example)
+     - Bio: Professional paragraph about the creator
+  
+  2. **Content Categories** (pills/badges):
+     - "Pet Care" "Lifestyle" "Comedy" "Product Reviews"
+     - Purple background pills
+  
+  3. **Audience Demographics**:
+     - Primary Age Group: 25-34
+     - Gender Split: 68% Female, 32% Male
+     - Top Locations: USA, Canada, UK
+  
+  4. **Recent Brand Partnerships**:
+     - List format with brand name and campaign type
+     - Example: "Purina" - "Sponsored Posts"
+
+**Right Column - Suggested Rate Card**:
+- Header: "Suggested Rate Card"
+- **Individual Posts Section**:
+  - Instagram Post: $1,200
+  - Instagram Story: $400
+  - Instagram Reel: $1,500
+  - TikTok Video: $1,800
+  - YouTube Integration: $3,500
+  - All rates in green text
+
+- **Package Deals Section** (separated by border):
+  - Basic Package: $2,500
+  - Standard Package: $5,000
+  - Premium Package: $10,000
+
+**AI Generation Logic**:
+- Use ChatGPT API endpoint: `/integrations/chat-gpt/conversationgpt4`
+- System prompt: "You are an expert in influencer marketing and media kit creation. Generate a professional media kit and suggested rate card for a cat content creator."
+- User prompt: Pass in all social media metrics
+- JSON Schema required fields:
+json
+{
+  "success": true,
+  "castingCalls": [
+    {
+      "id": 1,
+      "title": "string",
+      "company": "string",
+      "location": "string",
+      "compensation": "string",
+      "deadline": "YYYY-MM-DD",
+      "description": "string",
+      "requirements": ["string"],
+      "postedDate": "YYYY-MM-DD",
+      "source": "string"
+    }
+  ],
+  "lastUpdated": "ISO timestamp"
+}
